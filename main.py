@@ -5,7 +5,7 @@ import copy
 import time
 import math
 import argparse
-
+from show_map import show_step_img
 # 初始状态
 # S0 = [[11, 9, 4, 15],
 #       [1, 3, 0, 12],
@@ -116,6 +116,7 @@ def generate_child(sn_node, sg_node, hash_set, open_table, cal_distence):
     :参数 cal_distence: 距离函数
     :返回: None
     '''
+    # 当前节点和目标节点一样
     if sn_node == sg_node:
         heapq.heappush(open_table, sg_node)
         print('已找到终止状态！')
@@ -173,6 +174,7 @@ def print_path(node):
     while len(stack) != 0:
         t = stack.pop()
         show_block(t, step)
+        show_step_img(t,step)
         step += 1
     return steps
 
@@ -186,8 +188,10 @@ def A_start(start, end, distance_fn, generate_child_fn):
     :参数 generate_child_fn: 产生孩子节点的函数
     :返回: 最优路径长度
     '''
-    root = State(0, 0, start, hash(str(S0)), None)  # 根节点
-    end_state = State(0, 0, end, hash(str(SG)), None)  # 最后的节点
+    # 根节点
+    root = State(0, 0, start, hash(str(S0)), None)
+    # 最后的节点
+    end_state = State(0, 0, end, hash(str(SG)), None)
     if root == end_state:
         print("start == end !")
 
